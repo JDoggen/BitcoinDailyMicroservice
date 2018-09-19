@@ -49,6 +49,11 @@ public class BitcoinDailyScraperService implements IBitcoinDailyScraperService {
 		return automatedScraping = false;
 	}
 	
+	@Override
+	public BitcoinDaily getLastDay() {
+		return scrapeLastDay();
+	}
+	
 
 	/*
 	 * Methods private to the class, used for scraping and parsing data

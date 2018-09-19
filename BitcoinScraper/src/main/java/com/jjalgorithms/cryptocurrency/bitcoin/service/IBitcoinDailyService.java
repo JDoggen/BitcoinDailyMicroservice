@@ -14,13 +14,15 @@ public interface IBitcoinDailyService {
 	
 	public <S extends BitcoinDaily> List<S> saveAll(Iterable<S> s);
 	
-	
+	public BitcoinDaily getLastDay();
 	
 	public List<BitcoinDaily> scrape(Long startDate, Long endDate);
 	
 	public boolean startAutomatedScraping();
 	
 	public boolean endAutomatedScraping();
+	
+	public List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd);
 	
 	/*
 	public BitcoinDaily findBetweenTimeStamp(Long timeStampStart, Long timeStampEnd);

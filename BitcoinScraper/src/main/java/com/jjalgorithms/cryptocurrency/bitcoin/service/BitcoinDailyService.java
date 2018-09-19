@@ -43,6 +43,20 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		return this.iBitcoinDailyDAO.saveAll(s);
 	}
 	
+	@Override
+	public BitcoinDaily getLastDay() {
+		return this.iBitcoinDailyScraperService.getLastDay();
+	}
+	
+	@Override
+	public List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd){
+		List<BitcoinDaily> list = this.iBitcoinDailyDAO.findBytimeStampBetween(timeStampStart, timeStampEnd);
+		System.out.println(list.size());
+		return list;
+	}
+	
+	
+	
 	/*
 	@Override
 	public BitcoinDaily findBetweenTimeStamp(Long timeStampStart, Long timeStampEnd){
@@ -68,6 +82,7 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 	public boolean endAutomatedScraping() {
 		return this.iBitcoinDailyScraperService.endAutomatedScraping();
 	}
-	
+
+
 
 }

@@ -22,6 +22,8 @@ public interface IBitcoinDailyDAO  extends CrudRepository<BitcoinDaily, Long> {
 	@Override
 	public <S extends BitcoinDaily> List<S> saveAll(Iterable<S> s);
 	
+	List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd);
+	
 	//   ---> Hier ergens zit een fout!
 	//@Query("SELECT b FROM BitcoinDaily b WHERE b.time_stamp = timeStampStart")
 	//public BitcoinDaily findBetweenTimeStamp(@Param("timeStampStart") Long timeStampStart, @Param("timeStampEnd") Long timeStampEnd);
