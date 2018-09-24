@@ -1,6 +1,7 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.daily.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,27 @@ public class BitcoinDailyController {
 	private long count() {
 		return this.iBitcoinDailyService.count();
 	}
-
+	
+	@GetMapping("/api/bitcoindaily/getOverallOpenAverage")				//overall average
+	public Double getOveralOpenAverage() {
+		return this.iBitcoinDailyService.getOverallOpenAverage();	
+	}
+	
+	@GetMapping("/api/bitcoindaily/getOverallCloseAverage")				//overall average
+	public Double getOveralCloseAverage() {
+		return this.iBitcoinDailyService.getOverallCloseAverage();	
+	}
+	
+	@GetMapping("/api/bitcoindaily/getAllOpen")
+	public List<Double> getAllOpen(){
+		return this.iBitcoinDailyService.getAllOpen();
+	}
+	
+	@GetMapping("/api/bitcoindaily/getAllClose")
+	public List<Double> getAllClose(){
+		return this.iBitcoinDailyService.getAllClose();
+	}
+	
 	@GetMapping("/api/bitcoindaily/getlastday")
 	public BitcoinDailyDto getLastDay() {
 		BitcoinDailyDto bitcoinDailyDto = new BitcoinDailyDto();
@@ -72,7 +93,8 @@ public class BitcoinDailyController {
 	
 	@GetMapping("api/bitcoindaily/between/{timeStampStart}/{timeStampEnd}")
 	private List<BitcoinDaily> findByTimeStampBetween(@PathVariable Long timeStampStart, @PathVariable Long timeStampEnd){
-		return this.iBitcoinDailyService.findByTimeStampBetween( timeStampStart, timeStampEnd);
+
+		return this.iBitcoinDailyService.findBytimeStampBetween( timeStampStart, timeStampEnd);
 	}
 	
 	@GetMapping("api/bitcoindaily/isscraping")

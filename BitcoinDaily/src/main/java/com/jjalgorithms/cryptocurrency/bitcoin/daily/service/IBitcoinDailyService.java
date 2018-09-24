@@ -1,5 +1,6 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.daily.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.daily.model.BitcoinDaily;
@@ -7,6 +8,14 @@ import com.jjalgorithms.cryptocurrency.bitcoin.daily.model.BitcoinDaily;
 public interface IBitcoinDailyService {
 	
 	public long count();
+	
+	public List<Double> getAllOpen();
+	
+	public List<Double> getAllClose();
+	
+	public Double getOverallOpenAverage(); 
+	
+	public Double getOverallCloseAverage(); 
 	
 	public List<BitcoinDaily> findAll();
 	
@@ -22,7 +31,9 @@ public interface IBitcoinDailyService {
 	
 	public boolean endAutomatedScraping();
 	
-	public List<BitcoinDaily> findByTimeStampBetween(Long timeStampStart, Long timeStampEnd);
+	public List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd);
+	
+	public String unixToDate (Long timestamp);
 	
 	public boolean isScraping();
 	

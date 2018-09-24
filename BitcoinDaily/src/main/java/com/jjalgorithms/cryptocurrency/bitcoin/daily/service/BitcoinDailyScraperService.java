@@ -266,7 +266,7 @@ public class BitcoinDailyScraperService implements IBitcoinDailyScraperService {
 	private String unixToDate (Long timestamp) {
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String date = formatter.format(new Date((long) timestamp * 1000));
-		return date;
+		return date;	
 	}	
 	
 	private boolean fieldApproachesInfinity(BitcoinDaily bitcoinDaily) {
