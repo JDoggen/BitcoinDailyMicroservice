@@ -1,5 +1,7 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,56 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 	public long count() {
 		return this.iBitcoinDailyDAO.count();
 	}
+	@Override
+	public List<Double> getAllOpen() {										//Toegevoegd
+		List<BitcoinDaily> list =this.findAll();
+		ArrayList <Double> y = new ArrayList();
+		for(BitcoinDaily x: list) {
+			y.add(x.getOpen());
+		}
+		return y;
+	}
+	@Override
+	public List<Double> getAllClose() {										//Toegevoegd
+		List<BitcoinDaily> list =this.findAll();
+		ArrayList <Double> y = new ArrayList();
+		for(BitcoinDaily x: list) {
+			y.add(x.getClose());
+		}
+		return y;
+	}
+	public Double getOverallOpenAverage() {									//Toegevoegd
+		List <Double> y = getAllOpen();
+		Double totalOpen = 0.0;
+		for(Double x: y) {
+			totalOpen += x;
+		}
+		return totalOpen / count();
+	}
+	public Double getOverallCloseAverage() {									//Toegevoegd
+		List <Double> y = getAllClose();
+		Double totalClose = 0.0;
+		for(Double x: y) {
+			totalClose += x;
+		}
+		return totalClose / count();
+	}
+	public List<Double> getOpenBytimeStampBetween(Long timeStampStart, Long timeStampEnd) {
+		List<BitcoinDaily> list = this.findBytimeStampBetween(timeStampStart, timeStampEnd);
+		ArrayList <Double> y = new ArrayList();
+		for(BitcoinDaily x: list) {
+			y.add(x.getOpen());
+		}
+		return y;
+	}
+	public List<Double> getCloseBytimeStampBetween(Long timeStampStart, Long timeStampEnd) {
+		List<BitcoinDaily> list = this.findBytimeStampBetween(timeStampStart, timeStampEnd);
+		ArrayList <Double> y = new ArrayList();
+		for(BitcoinDaily x: list) {
+			y.add(x.getClose());
+		}
+		return y;
+	}
 
 	@Override
 	public List<BitcoinDaily> findAll() {
@@ -42,6 +94,20 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		Assert.notNull(s, "List<BitcoinDaily> can't be null");
 		return this.iBitcoinDailyDAO.saveAll(s);
 	}
+	
+	@Override
+	public BitcoinDaily getLastDay() {
+		return this.iBitcoinDailyScraperService.getLastDay();
+	}
+	
+	@Override
+	public List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd){
+		List<BitcoinDaily> list = this.iBitcoinDailyDAO.findBytimeStampBetween(timeStampStart, timeStampEnd);
+		System.out.println(list.size());
+		return list;
+	}
+	
+	
 	
 	/*
 	@Override
@@ -68,6 +134,12 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 	public boolean endAutomatedScraping() {
 		return this.iBitcoinDailyScraperService.endAutomatedScraping();
 	}
-	
+
+	//Date convertion methods
+	public Date unixToDate (Long timestamp) {
+		timestamp = timestamp * 1000;														// aangepast
+		return new Date((long)timestamp);
+	}	
+
 
 }

@@ -7,6 +7,8 @@ import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinDaily;
 public interface IBitcoinDailyScraperService {
 	
 	public List<BitcoinDaily> scrape(Long startDate, Long endDate);
+	
+	public BitcoinDaily getLastDay();
 
 	public boolean startAutomatedScraping();
 

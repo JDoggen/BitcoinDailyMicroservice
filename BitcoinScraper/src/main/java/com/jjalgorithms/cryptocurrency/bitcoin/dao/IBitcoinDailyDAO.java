@@ -1,5 +1,6 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,8 @@ public interface IBitcoinDailyDAO  extends CrudRepository<BitcoinDaily, Long> {
 	@Override
 	public long count();
 	
+	//public List<Double> findByOpen();
+	
 	@Override
 	public List<BitcoinDaily> findAll();	
 
@@ -21,6 +24,8 @@ public interface IBitcoinDailyDAO  extends CrudRepository<BitcoinDaily, Long> {
 	
 	@Override
 	public <S extends BitcoinDaily> List<S> saveAll(Iterable<S> s);
+	
+	List<BitcoinDaily> findBytimeStampBetween(Long timeStampStart, Long timeStampEnd);
 	
 	//   ---> Hier ergens zit een fout!
 	//@Query("SELECT b FROM BitcoinDaily b WHERE b.time_stamp = timeStampStart")
