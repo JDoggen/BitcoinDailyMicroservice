@@ -30,7 +30,7 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		return this.iBitcoinDailyDAO.count();
 	}
 	@Override
-	public List<Double> getAllOpen() {										//Toegevoegd
+	public List<Double> getAllOpen() {										
 		List<BitcoinDaily> list =this.findAll();
 		ArrayList <Double> y = new ArrayList();
 		for(BitcoinDaily x: list) {
@@ -38,8 +38,9 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		}
 		return y;
 	}
+	
 	@Override
-	public List<Double> getAllClose() {										//Toegevoegd
+	public List<Double> getAllClose() {								
 		List<BitcoinDaily> list =this.findAll();
 		ArrayList <Double> y = new ArrayList();
 		for(BitcoinDaily x: list) {
@@ -47,7 +48,7 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		}
 		return y;
 	}
-	public Double getOverallOpenAverage() {									//Toegevoegd
+	public Double getOverallOpenAverage() {								
 		List <Double> y = getAllOpen();
 		Double totalOpen = 0.0;
 		for(Double x: y) {
@@ -55,7 +56,7 @@ public class BitcoinDailyService implements IBitcoinDailyService{
 		}
 		return totalOpen / count();
 	}
-	public Double getOverallCloseAverage() {									//Toegevoegd
+	public Double getOverallCloseAverage() {							
 		List <Double> y = getAllClose();
 		Double totalClose = 0.0;
 		for(Double x: y) {
