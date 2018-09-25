@@ -1,15 +1,38 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Prediction {
 	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private Double oneDayPrediction;
+
+	private Double sevenDayPrediction;
 	
+	@OneToMany
+	private List<BitcoinData> bitcoindata;
+	
+	//Getters and Setters
+
+	public List<BitcoinData> getBitcoindata() {
+		return bitcoindata;
+	}
+
+	public void setBitcoindata(List<BitcoinData> bitcoindata) {
+		this.bitcoindata = bitcoindata;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -18,10 +41,6 @@ public class Prediction {
 		this.id = id;
 	}
 
-	private Double oneDayPrediction;
-
-	private Double sevenDayPrediction;
-	
 	public Double getOneDayPrediction() {
 		return oneDayPrediction;
 	}
