@@ -10,6 +10,7 @@ import com.jjalgorithms.cryptocurrency.bitcoin.dao.IPredictionDao;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.Prediction;
 
+
 @Service
 public class PredictionService implements IPredictionService{
 	
@@ -45,10 +46,10 @@ public class PredictionService implements IPredictionService{
 	@Override
 	public List<Prediction> findAll(){
 		return this.iPredictionDao.findAll();
-		}
+	}
 	
 	public Double create() {
 		return 0.0;
 	}
-	
+
 }

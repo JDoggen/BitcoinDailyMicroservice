@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+
 @Entity
 public class Prediction {
 	
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	private Long id;
 
 	private Double oneDayPrediction;

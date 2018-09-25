@@ -15,6 +15,7 @@ import com.jjalgorithms.cryptocurrency.bitcoin.service.IPredictionService;
 @RestController
 public class PredictionController {
 	
+	
 	@Autowired
 	private IPredictionService iPredictionService;
 	
@@ -26,7 +27,11 @@ public class PredictionController {
 	
 	/*@PostMapping("/")												//url incompleet
 	public Double create(@RequestBody List<Double> closeValues) { //requestbody: JSON bericht komt binnen wordt opgeslagen in een person obj
+
+		return this.iPersonService.create(person);
+
 		return this.iPredictionService.create(Prediction);
+
 		*/
 	
 }
