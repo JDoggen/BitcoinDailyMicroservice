@@ -22,7 +22,7 @@ public class PredictionService implements IPredictionService{
 		return this.iPredictionDao.count();
 	}
 	
-	public Double setOneDayPrediction(Long timeStampStart, Long timeStampEnd) {
+	public Double setOneDayPrediction(Long timeStampStart, Long timeStampEnd) { 
 		return 0.0;
 	}
 
