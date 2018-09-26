@@ -21,5 +21,8 @@ public interface IPredictionDao  extends CrudRepository< Prediction, Long> {
 	
 	@Override
 	public <S extends Prediction> List<S> saveAll(Iterable<S> s);
+	
+	@Override
+	public void deleteById(Long id);
 		
 }

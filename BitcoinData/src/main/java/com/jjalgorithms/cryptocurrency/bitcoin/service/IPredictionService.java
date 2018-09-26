@@ -9,11 +9,12 @@ public interface IPredictionService {
 	
 	public long count();
 	
-	public List<Double> getCloseValuesBytimeStampBetween(Long timeStampStart, Long timeStampEnd);
-
-	public Double getCloseValuesAverageBetween(Long timeStampStart, Long timeStampEnd); 
+	public Prediction getPrediction(Long timeStampStart, Long timeStampEnd);
 	
 	public List<Prediction> findAll();
 	
 	public Double create();
+	
+	public void deleteById(Long id);
+
 }
