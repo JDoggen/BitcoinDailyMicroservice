@@ -10,7 +10,7 @@ public interface IBitcoinScrapingService {
 	
 	public boolean startAutomatedScraping();
 
-	public boolean endAutomatedScraping();
+	public boolean stopAutomatedScraping();
 	
 	public boolean isScraping();
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import com.jjalgorithms.cryptocurrency.bitcoin.dto.BitcoinDataDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
 import com.jjalgorithms.cryptocurrency.bitcoin.service.IBitcoinScrapingService;
 
+@CrossOrigin
 @RestController
 public class BitcoinScrapingController {
 
@@ -37,5 +39,20 @@ public class BitcoinScrapingController {
 			listBitcoinDataDto.add(bitcoinDataDto);
 		}
 		return listBitcoinDataDto;
+	}
+	
+	@GetMapping("/api/bitcoin/scrape/isscraping")
+	private boolean isScrapging() {
+		return this.iBitcoinScrapingService.isScraping();
+	}
+	
+	@GetMapping("/api/bitcoin/scrape/startscraping")
+	private boolean startAutomatedScraping() {
+		return this.iBitcoinScrapingService.startAutomatedScraping();
+	}
+	
+	@GetMapping("/api/bitcoin/scrape/stopscraping")
+	private boolean stopAutomatedScraping() {
+		return this.iBitcoinScrapingService.stopAutomatedScraping();
 	}
 }
