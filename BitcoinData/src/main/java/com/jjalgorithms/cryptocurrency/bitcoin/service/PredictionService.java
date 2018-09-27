@@ -29,12 +29,27 @@ public class PredictionService implements IPredictionService{
 		Prediction prediction = new Prediction();
 		prediction.setBitcoindata(this.iBitcoinDataDao.findByTimeStampBetween(timeStampStart, timeStampEnd));
 		List <Double> closeValues = getCloseValuesBytimeStampBetween(prediction.getBitcoindata());
-		Double averageClose = getCloseValuesAverageBetween(closeValues);
-		prediction.setOneDayPrediction(averageClose);
-		prediction.setSevenDayPrediction(0.0);
+		Double theAverage = getCloseValuesAverageBetween(closeValues);
+		Double lastCloseValue = closeValues.get(closeValues.size()-1);	
+		Double theFactor = getFactor(closeValues);
+		prediction.setOneDayPrediction(theFactor*lastCloseValue); 
+		prediction.setSevenDayPrediction(theAverage);
 		this.iPredictionDao.save(prediction);
 		return prediction;
 		
+	}
+	
+	public Double getFactor(List <Double> closeValues)	{					//prediction based on percentage change
+		ArrayList <Double> percentages = new ArrayList<>();
+		for(int x = 1; x < closeValues.size() ;x++) {
+				percentages.add((closeValues.get(x)/closeValues.get(x-1))-1);
+			}
+		Double totalFactors = 0.0;
+		for (Double x: percentages) {
+			totalFactors +=x;
+		}
+		Double theFactor = ((totalFactors/percentages.size())*100)+1;
+		return theFactor;
 	}
 
 	public Double getCloseValuesAverageBetween(List <Double> list) {
