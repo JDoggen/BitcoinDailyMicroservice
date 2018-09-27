@@ -32,8 +32,8 @@ public class PredictionController {
 	}
 	
 	@PostMapping("api/bitcoin/createprediction/{start}/{end}")
-	public void getPrediction(@PathVariable Long start, @PathVariable Long end) {
-		this.iPredictionService.getPrediction(start, end);	
+	public Prediction getPrediction(@PathVariable Long start, @PathVariable Long end) {
+		return this.iPredictionService.getPrediction(start, end);	
 	}
 	
 	/*@PutMapping("api/bitcoin/changeprediction/{id}/{start}/{end}")								//
