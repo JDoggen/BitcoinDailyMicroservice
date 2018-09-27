@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.service.IBitcoinDataService;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.*;
 import com.jjalgorithms.cryptocurrency.bitcoin.dto.*;
 
+@CrossOrigin
+@RestController
 public class BitcoinDataController {
 	
 	@Autowired
@@ -29,16 +33,19 @@ public class BitcoinDataController {
 			bitcoinDto.setClose(bitcoinData.getClose());
 			bitcoinDto.setHigh(bitcoinData.getHigh());
 			bitcoinDto.setLow(bitcoinData.getLow());
-			bitcoinDto.setHigh(bitcoinData.getHigh());
+			bitcoinDto.setOpen(bitcoinData.getOpen());
 			bitcoinDto.setTimeStamp(bitcoinData.getTimeStamp());
-			bitcoinDto.setVolumeBtc(bitcoinData.getClose());
-			bitcoinDto.setVolumeCurrency(bitcoinData.getClose());
+			bitcoinDto.setVolumeBtc(bitcoinData.getVolumeBtc());
+			bitcoinDto.setVolumeCurrency(bitcoinData.getVolumeCurrency());
 			bitcoinDto.setWeightedPrice(bitcoinData.getWeightedPrice());
 			listBitcoinDataDto.add(bitcoinDto);
 		}
 		return listBitcoinDataDto;
 	}
 	
-	
-
+	@GetMapping("/api/bitcoin/firstentry")
+	private String getFirstEntry() {
+		BitcoinData firstEntry = this.iBitcoinDataService.findFirstByOrderByTimeStampAsc();
+		return this.iBitcoinDataService.unixToDate(firstEntry.getTimeStamp());
+	}
 }

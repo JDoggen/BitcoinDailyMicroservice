@@ -29,7 +29,7 @@ public class BitcoinScrapingService implements IBitcoinScrapingService {
 									+ "&c=1";
 	final private int timeUnitInSeconds = 60;				//Minutely
 	final private int scrapingDelay = 1000;					//Delay when scraping, in milliseconds
-	final private int scrapingMagnitude = 20;				//How many timestamps should be requested each scrapingDelay
+	final private int scrapingMagnitude = 1440 ;					//How many timestamps should be requested each scrapingDelay
 	
 	/*
 	 * END CONFIG
@@ -54,7 +54,7 @@ public class BitcoinScrapingService implements IBitcoinScrapingService {
 	}
 	
 	@Override
-	public boolean endAutomatedScraping() {
+	public boolean stopAutomatedScraping() {
 		return automatedScraping = false;
 	}
 	
