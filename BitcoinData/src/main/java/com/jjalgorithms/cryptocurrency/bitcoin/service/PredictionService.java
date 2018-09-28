@@ -27,7 +27,7 @@ public class PredictionService implements IPredictionService{
 	
 	public Prediction getPrediction(Long timeStampStart, Long timeStampEnd) { 
 		Prediction prediction = new Prediction();
-		prediction.setBitcoindata(this.iBitcoinDataDao.findByTimeStampBetween(timeStampStart, timeStampEnd));
+		prediction.setBitcoindata(this.iBitcoinDataDao.findByTimeStampBetweenOrderByTimeStampAsc(timeStampStart, timeStampEnd));
 		List <Double> closeValues = getCloseValuesBytimeStampBetween(prediction.getBitcoindata());
 		Double theAverage = getCloseValuesAverageBetween(closeValues);
 		Double lastCloseValue = closeValues.get(closeValues.size()-1);	

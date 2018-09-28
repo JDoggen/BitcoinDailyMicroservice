@@ -20,7 +20,7 @@ public interface IBitcoinDataDao extends CrudRepository<BitcoinData, Long>{
 	@Override
 	public <S extends BitcoinData> List<S> saveAll(Iterable<S> s);
 	
-	List<BitcoinData> findByTimeStampBetween(Long timeStampStart, Long timeStampEnd);
+	List<BitcoinData> findByTimeStampBetweenOrderByTimeStampAsc(Long timeStampStart, Long timeStampEnd);
 	
 	BitcoinData findFirstByOrderByTimeStampAsc();
 	
