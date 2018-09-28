@@ -41,8 +41,8 @@ public class BitcoinDataService implements IBitcoinDataService {
 	}
 	
 	@Override
-	public List<BitcoinData> findByTimeStampBetween(Long timeStampStart, Long timeStampEnd){
-		return this.iBitcoinDailyDAO.findByTimeStampBetween(timeStampStart, timeStampEnd);
+	public List<BitcoinData> findByTimeStampBetweenOrderByTimeStampAsc(Long timeStampStart, Long timeStampEnd){
+		return this.iBitcoinDailyDAO.findByTimeStampBetweenOrderByTimeStampAsc(timeStampStart, timeStampEnd);
 	}
 	
 	@Override
@@ -53,6 +53,13 @@ public class BitcoinDataService implements IBitcoinDataService {
 	@Override
 	public BitcoinData findFirstByOrderByTimeStampDesc() {
 		return this.iBitcoinDailyDAO.findFirstByOrderByTimeStampDesc();
+	}
+	
+	@Override
+	public List<BitcoinData> getData(Date startDate, Date endDate) {
+		Long startDateUnix = DateToUnix(startDate);
+		Long endDateUnix = DateToUnix(endDate);
+		return this.iBitcoinDailyDAO.findByTimeStampBetweenOrderByTimeStampAsc(startDateUnix, endDateUnix);
 	}
 	
 	//Sidemethods directly accessible through the interface
@@ -67,6 +74,13 @@ public class BitcoinDataService implements IBitcoinDataService {
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(new Date((long) timeStamp * 1000));
 	}
+	
+	@Override
+	public Long DateToUnix(Date date) {
+		return date.getTime()/1000;
+	}
+	
+	
 	
 	
 	
