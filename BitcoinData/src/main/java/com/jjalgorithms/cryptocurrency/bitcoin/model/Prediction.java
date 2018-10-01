@@ -19,23 +19,23 @@ public class Prediction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long id;
+	
+	private Double standardDeviation;
+	
+	private Double theFactor;
 
 	private Double oneDayPrediction;
 
 	private Double sevenDayPrediction;
 	
+	private Double lastCloseValue;
+	
+	private Double averageCloseValue;
+
 	@ManyToMany
 	private List<BitcoinData> bitcoindata;
 	
 	//Getters and Setters
-
-	public List<BitcoinData> getBitcoindata() {
-		return bitcoindata;
-	}
-
-	public void setBitcoindata(List<BitcoinData> bitcoindata) {
-		this.bitcoindata = bitcoindata;
-	}
 
 	public Long getId() {
 		return id;
@@ -44,7 +44,21 @@ public class Prediction {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public Double getStandardDeviation() {
+		return standardDeviation;
+	}
 
+	public void setStandardDeviation(Double standardDeviation) {
+		this.standardDeviation = standardDeviation;
+	}
+
+	public Double getTheFactor() {
+		return theFactor;
+	}
+
+	public void setTheFactor(Double theFactor) {
+		this.theFactor = theFactor;
+	}
 	public Double getOneDayPrediction() {
 		return oneDayPrediction;
 	}
@@ -60,6 +74,28 @@ public class Prediction {
 	public void setSevenDayPrediction(Double sevenDayPrediction) {
 		this.sevenDayPrediction = sevenDayPrediction;
 	}
+	
+	public List<BitcoinData> getBitcoindata() {
+		return bitcoindata;
+	}
 
+	public void setBitcoindata(List<BitcoinData> bitcoindata) {
+		this.bitcoindata = bitcoindata;
+	}
+	public Double getLastCloseValue() {
+		return lastCloseValue;
+	}
+
+	public void setLastCloseValue(Double lastCloseValue) {
+		this.lastCloseValue = lastCloseValue;
+	}
+
+	public Double getAverageCloseValue() {
+		return averageCloseValue;
+	}
+
+	public void setAverageCloseValue(Double averageCloseValue) {
+		this.averageCloseValue = averageCloseValue;
+	}
 	
 }
