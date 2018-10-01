@@ -1,5 +1,6 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
@@ -14,7 +15,7 @@ public interface IBitcoinDataService {
 	
 	public <S extends BitcoinData> List<S> saveAll(Iterable<S> s);
 	
-	public List<BitcoinData> findByTimeStampBetween(Long timeStampStart, Long timeStampEnd);
+	public List<BitcoinData> findByTimeStampBetweenOrderByTimeStampAsc(Long timeStampStart, Long timeStampEnd);
 	
 	public String unixToDate (Long timestamp);
 	
@@ -23,5 +24,9 @@ public interface IBitcoinDataService {
 	public BitcoinData findFirstByOrderByTimeStampAsc();
 
 	public BitcoinData findFirstByOrderByTimeStampDesc();
+	
+	public List<BitcoinData> getData(Date startDate, Date endDate);
+	
+	public Long DateToUnix(Date date);
 	
 }

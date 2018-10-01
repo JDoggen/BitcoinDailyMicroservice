@@ -1,11 +1,15 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.service.IBitcoinDataService;
@@ -47,5 +51,36 @@ public class BitcoinDataController {
 	private String getFirstEntry() {
 		BitcoinData firstEntry = this.iBitcoinDataService.findFirstByOrderByTimeStampAsc();
 		return this.iBitcoinDataService.unixToDate(firstEntry.getTimeStamp());
+	}
+	
+	@PostMapping("/api/bitcoin/getdata")
+	private List<BitcoinDataDto> getData(@RequestBody DateDto dateDto) {
+		List<BitcoinData> bitcoinDataList = this.iBitcoinDataService.getData(dateDto.getStartDate(), dateDto.getEndDate());
+		return convertToDto(bitcoinDataList);
+	}
+	
+	
+	
+	//Private methods
+	private BitcoinDataDto convertToDto(BitcoinData bitcoinData) {
+		BitcoinDataDto bitcoinDataDto = new BitcoinDataDto();
+		bitcoinDataDto.setClose(bitcoinData.getClose());
+		bitcoinDataDto.setHigh(bitcoinData.getHigh());
+		bitcoinDataDto.setLow(bitcoinData.getLow());
+		bitcoinDataDto.setOpen(bitcoinData.getOpen());
+		bitcoinDataDto.setTimeStamp(bitcoinData.getTimeStamp());
+		bitcoinDataDto.setVolumeBtc(bitcoinData.getVolumeBtc());
+		bitcoinDataDto.setVolumeCurrency(bitcoinData.getVolumeCurrency());
+		bitcoinDataDto.setWeightedPrice(bitcoinData.getWeightedPrice());
+		return bitcoinDataDto;
+	}
+	
+	private ArrayList<BitcoinDataDto> convertToDto(Iterable<BitcoinData> bitcoinDataList) {
+		ArrayList<BitcoinDataDto> bitcoinDataDtoList = new ArrayList<>();
+		for(BitcoinData bitcoinData : bitcoinDataList) {
+			BitcoinDataDto bitcoinDataDto = convertToDto(bitcoinData);
+			bitcoinDataDtoList.add(bitcoinDataDto);
+		}
+		return bitcoinDataDtoList;
 	}
 }

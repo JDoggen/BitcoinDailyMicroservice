@@ -41,7 +41,7 @@ public class PredictionService implements IPredictionService{
 	}
 	
 	public List<BitcoinData> getPredictionBitcoinData(Long timeStampStart, Long timeStampEnd){
-		return this.iBitcoinDataDao.findByTimeStampBetween(timeStampStart, timeStampEnd);
+		return this.iBitcoinDataDao.findByTimeStampBetweenOrderByTimeStampAsc(timeStampStart, timeStampEnd);
 	}
 	
 	public Double calculateTheFactor(List <Double> listOfCloseValues)	{					//prediction based on percentage change
