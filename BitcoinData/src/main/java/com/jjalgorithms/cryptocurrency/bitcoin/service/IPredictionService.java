@@ -16,7 +16,7 @@ public interface IPredictionService {
 	
 	public List<Prediction> findAll();
 	
-	public Optional <Prediction> findById(Long id);
+	public Prediction findById(Long id);
 		
 	public void deleteById(Long id);
 

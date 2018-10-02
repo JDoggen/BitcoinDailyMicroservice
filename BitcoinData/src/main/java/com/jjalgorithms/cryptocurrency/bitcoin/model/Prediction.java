@@ -25,12 +25,14 @@ public class Prediction {
 	private Double theFactor;
 
 	private Double oneDayPrediction;
-
-	private Double sevenDayPrediction;
 	
 	private Double lastCloseValue;
 	
 	private Double averageCloseValue;
+	
+	private Long start;
+
+	private Long end;
 
 	@ManyToMany
 	private List<BitcoinData> bitcoindata;
@@ -66,14 +68,6 @@ public class Prediction {
 	public void setOneDayPrediction(Double oneDayPrediction) {
 		this.oneDayPrediction = oneDayPrediction;
 	}
-
-	public Double getSevenDayPrediction() {
-		return sevenDayPrediction;
-	}
-
-	public void setSevenDayPrediction(Double sevenDayPrediction) {
-		this.sevenDayPrediction = sevenDayPrediction;
-	}
 	
 	public List<BitcoinData> getBitcoindata() {
 		return bitcoindata;
@@ -96,6 +90,22 @@ public class Prediction {
 
 	public void setAverageCloseValue(Double averageCloseValue) {
 		this.averageCloseValue = averageCloseValue;
+	}
+	
+	public Long getStart() {
+		return start;
+	}
+
+	public void setStart(Long start) {
+		this.start = start;
+	}
+
+	public Long getEnd() {
+		return end;
+	}
+
+	public void setEnd(Long end) {
+		this.end = end;
 	}
 	
 }
