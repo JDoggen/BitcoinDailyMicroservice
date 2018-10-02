@@ -53,6 +53,12 @@ public class BitcoinDataController {
 		return this.iBitcoinDataService.unixToDate(firstEntry.getTimeStamp());
 	}
 	
+	@GetMapping("/api/bitcoin/lastentry")
+	private String getLastEntry() {
+		BitcoinData lastEntry = this.iBitcoinDataService.findFirstByOrderByTimeStampDesc();
+		return this.iBitcoinDataService.unixToDate(lastEntry.getTimeStamp());
+	}
+	
 	@PostMapping("/api/bitcoin/getdata")
 	private List<BitcoinDataDto> getData(@RequestBody DateDto dateDto) {
 		List<BitcoinData> bitcoinDataList = this.iBitcoinDataService.getData(dateDto.getStartDate(), dateDto.getEndDate());
