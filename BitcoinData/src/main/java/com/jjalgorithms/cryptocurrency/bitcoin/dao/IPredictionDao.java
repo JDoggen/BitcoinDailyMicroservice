@@ -1,6 +1,7 @@
 package com.jjalgorithms.cryptocurrency.bitcoin.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,9 @@ public interface IPredictionDao  extends CrudRepository< Prediction, Long> {
 	
 	@Override
 	public List<Prediction> findAll();	
+	
+	@Override
+	public Optional<Prediction> findById(Long id);
 
 	@Override
 	public <S extends Prediction> S save(S s);
