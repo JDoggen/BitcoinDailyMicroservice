@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.dao.IBitcoinDataDao;
 import com.jjalgorithms.cryptocurrency.bitcoin.dao.IPredictionDao;
@@ -34,8 +35,9 @@ public class PredictionService implements IPredictionService{
 		prediction.setLastCloseValue(closeValues.get(closeValues.size()-1));	
 		prediction.setTheFactor(calculateTheFactor(closeValues));
 		prediction.setStandardDeviation(calculateStandardDeviation(closeValues, prediction.getAverageCloseValue()));
-		prediction.setOneDayPrediction(prediction.getTheFactor()*prediction.getLastCloseValue()); 
-		prediction.setSevenDayPrediction(0.0);
+		prediction.setOneDayPrediction(Math.pow(prediction.getTheFactor(),1440)*prediction.getLastCloseValue()); 
+		prediction.setStart(timeStampStart);
+		prediction.setEnd(timeStampEnd);
 		this.iPredictionDao.save(prediction);
 		return prediction;	
 	}
@@ -118,25 +120,24 @@ public class PredictionService implements IPredictionService{
 	}
 	
 	public Prediction changePrediction(Long id, Long timeStampStart, Long timeStampEnd) { 
-		Optional <Prediction> optionalPrediction = this.findById(id);
-		if(optionalPrediction.isPresent()) {
-			Prediction prediction = optionalPrediction.get();
+			Prediction prediction = this.findById(id);
 			prediction.setBitcoindata(getPredictionBitcoinData(timeStampStart, timeStampEnd));
 			List <Double> closeValues = getCloseValuesBytimeStampBetween(prediction.getBitcoindata());
-			Double closeValueAverage = getCloseValuesAverageBetween(closeValues);
-			Double lastCloseValue = closeValues.get(closeValues.size()-1);	
+			prediction.setAverageCloseValue(getCloseValuesAverageBetween(closeValues));
+			prediction.setLastCloseValue(closeValues.get(closeValues.size()-1));	
 			prediction.setTheFactor(calculateTheFactor(closeValues));
-			prediction.setStandardDeviation(calculateStandardDeviation(closeValues, closeValueAverage));
-			prediction.setOneDayPrediction(prediction.getTheFactor()*lastCloseValue); 
-			prediction.setSevenDayPrediction(closeValueAverage);
+			prediction.setStandardDeviation(calculateStandardDeviation(closeValues, prediction.getAverageCloseValue()));
+			prediction.setOneDayPrediction((Math.pow(prediction.getTheFactor(), 1440)*prediction.getLastCloseValue())); 
+			prediction.setStart(timeStampStart);
+			prediction.setEnd(timeStampEnd);
 			this.iPredictionDao.save(prediction);
-			return prediction;
-		}
-		else return null;	
+			return prediction;		
 	}
 
-	public Optional<Prediction> findById(Long id){
-		return this.iPredictionDao.findById(id);
+	public Prediction findById(Long id){
+		Optional <Prediction> optionalPrediction = this.iPredictionDao.findById(id);
+		Assert.notNull(optionalPrediction.get(), "Couldn't find ID in database");
+		return optionalPrediction.get();
 	}
 
 }
