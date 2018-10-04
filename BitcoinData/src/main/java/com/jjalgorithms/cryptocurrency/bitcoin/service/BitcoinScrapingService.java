@@ -69,7 +69,8 @@ public class BitcoinScrapingService implements IBitcoinScrapingService {
 	private void automatedScraping() {
 		if(automatedScraping) {
 			BitcoinData firstEntry = this.iBitcoinDataDao.findFirstByOrderByTimeStampAsc();
-			List<BitcoinData> scrapedEntries = scrapeData(firstEntry.getTimeStamp() - scrapingMagnitude*timeUnitInSeconds, firstEntry.getTimeStamp());
+			List<BitcoinData> scrapedEntries = 
+					scrapeData(firstEntry.getTimeStamp() - scrapingMagnitude*timeUnitInSeconds, firstEntry.getTimeStamp());
 			if(scrapedEntries.size() == 0) {
 				this.automatedScraping = false;
 			}
