@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjalgorithms.cryptocurrency.bitcoin.dto.BitcoinDataDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.dto.PredictionDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.dto.UserDto;
-import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.Prediction;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.User;
 import com.jjalgorithms.cryptocurrency.bitcoin.service.IPredictionService;
@@ -57,7 +55,6 @@ public class PredictionController {
 		newUserDto.setId(newUser.getId());
 		newUserDto.setPredictions(newUser.getPrediction());
 		return newUserDto;
-
 	}
 	
 	@PostMapping("/api/bitcoin/prediction")

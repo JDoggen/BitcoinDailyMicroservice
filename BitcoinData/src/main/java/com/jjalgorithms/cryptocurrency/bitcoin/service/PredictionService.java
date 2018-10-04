@@ -36,7 +36,22 @@ public class PredictionService implements IPredictionService{
 	@Override
 	public List<Prediction> getUserPrediction(UserDto userDto){
 		User user = this.iUserDao.findByUserName(userDto.getUserName()).get();
-		return user.getPrediction();
+		ArrayList<Prediction> unsortedPredictions = new ArrayList<>();
+		unsortedPredictions.addAll(user.getPrediction());
+		List<Prediction> sortedPredictions = new ArrayList<Prediction>();
+		int size = unsortedPredictions.size();
+		for(int i = 0; i < size; i++) {
+			int index = 0;
+			Long idOfIndex = unsortedPredictions.get(0).getId(); 
+			for(int j = 0; j < unsortedPredictions.size(); j ++) {
+				if(unsortedPredictions.get(j).getId() < idOfIndex) {
+					index = j;
+					idOfIndex = unsortedPredictions.get(j).getId();
+				}
+			}
+			sortedPredictions.add(unsortedPredictions.remove(index));
+		}
+		return sortedPredictions;
 	}
 	
 	@Override
