@@ -31,7 +31,7 @@ public class PredictionController {
 	
 	@GetMapping("api/bitcoin/prediction/findall")
 	public List<PredictionDto> findAll() {
-		List<Prediction> predictionList = this.iPredictionService.findAll();
+		List<Prediction> predictionList = this.iPredictionService.findAllByOrderByIdAsc();
 		List<PredictionDto> predictionDtoList = new ArrayList<>();
 		for(Prediction prediction : predictionList) {
 			predictionDtoList.add(convertToDto(prediction));
@@ -45,6 +45,7 @@ public class PredictionController {
 		return convertToDto(prediction);
 	}
 	
+
 	@PostMapping("api/bitcoin/createprediction/")
 	public UserDto getPrediction(@RequestBody UserDto userDto) {
 		User user = new User();
@@ -56,7 +57,7 @@ public class PredictionController {
 		newUserDto.setId(newUser.getId());
 		newUserDto.setPredictions(newUser.getPrediction());
 		return newUserDto;
-		
+
 	}
 	
 	@PostMapping("/api/bitcoin/prediction")
