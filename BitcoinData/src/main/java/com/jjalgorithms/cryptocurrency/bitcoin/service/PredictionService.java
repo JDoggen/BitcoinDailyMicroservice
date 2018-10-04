@@ -35,7 +35,7 @@ public class PredictionService implements IPredictionService{
 		prediction.setLastCloseValue(closeValues.get(closeValues.size()-1));	
 		prediction.setTheFactor(calculateTheFactor(closeValues));
 		prediction.setStandardDeviation(calculateStandardDeviation(closeValues, prediction.getAverageCloseValue()));
-		prediction.setOneDayPrediction(Math.pow(prediction.getTheFactor(),1440)*prediction.getLastCloseValue()); 
+		prediction.setOneDayPrediction(prediction.getTheFactor()*prediction.getLastCloseValue()); 
 		prediction.setStart(timeStampStart);
 		prediction.setEnd(timeStampEnd);
 		this.iPredictionDao.save(prediction);
@@ -115,6 +115,10 @@ public class PredictionService implements IPredictionService{
 		return this.iPredictionDao.findAll();
 	}
 	
+	public List<Prediction> findAllByOrderByIdAsc(){
+		return this.iPredictionDao.findAllByOrderByIdAsc();
+	}
+	
 	public void deleteById(Long id) {
 		this.iPredictionDao.deleteById(id);
 	}
@@ -127,7 +131,7 @@ public class PredictionService implements IPredictionService{
 			prediction.setLastCloseValue(closeValues.get(closeValues.size()-1));	
 			prediction.setTheFactor(calculateTheFactor(closeValues));
 			prediction.setStandardDeviation(calculateStandardDeviation(closeValues, prediction.getAverageCloseValue()));
-			prediction.setOneDayPrediction((Math.pow(prediction.getTheFactor(), 1440)*prediction.getLastCloseValue())); 
+			prediction.setOneDayPrediction((prediction.getTheFactor()*prediction.getLastCloseValue())); 
 			prediction.setStart(timeStampStart);
 			prediction.setEnd(timeStampEnd);
 			this.iPredictionDao.save(prediction);

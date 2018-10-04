@@ -13,9 +13,11 @@ public interface IPredictionDao  extends CrudRepository< Prediction, Long> {
 	@Override
 	public long count();
 	
-	
 	@Override
 	public List<Prediction> findAll();	
+	
+	
+	public List<Prediction> findAllByOrderByIdAsc();	
 	
 	@Override
 	public Optional<Prediction> findById(Long id);
