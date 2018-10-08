@@ -10,8 +10,11 @@ import org.springframework.util.Assert;
 
 import com.jjalgorithms.cryptocurrency.bitcoin.dao.IBitcoinDataDao;
 import com.jjalgorithms.cryptocurrency.bitcoin.dao.IPredictionDao;
+import com.jjalgorithms.cryptocurrency.bitcoin.dao.IUserDao;
+import com.jjalgorithms.cryptocurrency.bitcoin.dto.UserDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.Prediction;
+import com.jjalgorithms.cryptocurrency.bitcoin.model.User;
 
 
 @Service
@@ -22,24 +25,52 @@ public class PredictionService implements IPredictionService{
 	@Autowired
 	private IBitcoinDataDao iBitcoinDataDao;
 
+	@Autowired
+	private IUserDao iUserDao;
+	
 	@Override
 	public long count() {
 		return this.iPredictionDao.count();
 	}
 	
-	public Prediction createPrediction(Long timeStampStart, Long timeStampEnd) { 
-		Prediction prediction = new Prediction();
-		prediction.setBitcoindata(getPredictionBitcoinData(timeStampStart, timeStampEnd));
+	@Override
+	public List<Prediction> getUserPrediction(UserDto userDto){
+		User user = this.iUserDao.findByUserName(userDto.getUserName()).get();
+		ArrayList<Prediction> unsortedPredictions = new ArrayList<>();
+		unsortedPredictions.addAll(user.getPrediction());
+		List<Prediction> sortedPredictions = new ArrayList<Prediction>();
+		int size = unsortedPredictions.size();
+		for(int i = 0; i < size; i++) {
+			int index = 0;
+			Long idOfIndex = unsortedPredictions.get(0).getId(); 
+			for(int j = 0; j < unsortedPredictions.size(); j ++) {
+				if(unsortedPredictions.get(j).getId() < idOfIndex) {
+					index = j;
+					idOfIndex = unsortedPredictions.get(j).getId();
+				}
+			}
+			sortedPredictions.add(unsortedPredictions.remove(index));
+		}
+		return sortedPredictions;
+	}
+	
+	@Override
+	public User createPrediction(User user) { 
+		Prediction prediction = user.getPrediction().get(0);
+		prediction.setBitcoindata(getPredictionBitcoinData(prediction.getStart(), prediction.getEnd()));
 		List <Double> closeValues = getCloseValuesBytimeStampBetween(prediction.getBitcoindata());
 		prediction.setAverageCloseValue(getCloseValuesAverageBetween(closeValues));
 		prediction.setLastCloseValue(closeValues.get(closeValues.size()-1));	
 		prediction.setTheFactor(calculateTheFactor(closeValues));
 		prediction.setStandardDeviation(calculateStandardDeviation(closeValues, prediction.getAverageCloseValue()));
 		prediction.setOneDayPrediction(prediction.getTheFactor()*prediction.getLastCloseValue()); 
-		prediction.setStart(timeStampStart);
-		prediction.setEnd(timeStampEnd);
-		this.iPredictionDao.save(prediction);
-		return prediction;	
+		user = this.iUserDao.findByUserName(user.getUserName()).get();
+		if(user.getPrediction() == null) {
+			user.setPrediction(new ArrayList<>());
+		}
+		user.getPrediction().add(prediction);
+		this.iUserDao.save(user);
+		return user;
 	}
 	
 	public List<BitcoinData> getPredictionBitcoinData(Long timeStampStart, Long timeStampEnd){

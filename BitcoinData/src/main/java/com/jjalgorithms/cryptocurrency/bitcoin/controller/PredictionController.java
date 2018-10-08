@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jjalgorithms.cryptocurrency.bitcoin.dto.BitcoinDataDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.dto.PredictionDto;
-import com.jjalgorithms.cryptocurrency.bitcoin.model.BitcoinData;
+import com.jjalgorithms.cryptocurrency.bitcoin.dto.UserDto;
 import com.jjalgorithms.cryptocurrency.bitcoin.model.Prediction;
+import com.jjalgorithms.cryptocurrency.bitcoin.model.User;
 import com.jjalgorithms.cryptocurrency.bitcoin.service.IPredictionService;
 
 
@@ -43,11 +43,30 @@ public class PredictionController {
 		return convertToDto(prediction);
 	}
 	
-	@PostMapping("api/bitcoin/createprediction")
-	public PredictionDto getPrediction(@RequestBody PredictionDto predictionDto) {
-		Prediction prediction = this.iPredictionService.createPrediction(predictionDto.getStart(), predictionDto.getEnd());
-		return convertToDto(prediction);
+
+	@PostMapping("api/bitcoin/createprediction/")
+	public UserDto getPrediction(@RequestBody UserDto userDto) {
+		User user = new User();
+		user.setUserName(userDto.getUserName());
+		user.setPrediction(userDto.getPredictions());
+		User newUser = this.iPredictionService.createPrediction(user);
+		UserDto newUserDto = new UserDto();
+		newUserDto.setUserName(newUser.getUserName());
+		newUserDto.setId(newUser.getId());
+		newUserDto.setPredictions(newUser.getPrediction());
+		return newUserDto;
 	}
+	
+	@PostMapping("/api/bitcoin/prediction")
+	public List<PredictionDto> getUserPrediction(@RequestBody UserDto userDto) {
+		List<Prediction> predictionList = this.iPredictionService.getUserPrediction(userDto);
+		List<PredictionDto> predictionDtoList = new ArrayList<>();
+		for(Prediction prediction : predictionList) {
+			predictionDtoList.add(convertToDto(prediction));
+		}
+		return predictionDtoList;
+	}
+	
 	
 	@PutMapping("api/bitcoin/changeprediction")			// nog fixen??
 	public PredictionDto changePrediction(@RequestBody PredictionDto predictionDto) {

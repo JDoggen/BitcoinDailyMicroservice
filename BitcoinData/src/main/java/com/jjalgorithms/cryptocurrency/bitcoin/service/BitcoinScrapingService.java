@@ -28,7 +28,7 @@ public class BitcoinScrapingService implements IBitcoinScrapingService {
 									+ "&i=1-min"
 									+ "&c=1";
 	final private int timeUnitInSeconds = 60;				//Minutely
-	final private int scrapingDelay = 900000;				//Delay when scraping, in milliseconds
+	final private int scrapingDelay = 900_000;				//Delay when scraping, in milliseconds
 	final private int scrapingMagnitude = 1440 ;			//How many timestamps should be requested each scrapingDelay
 	
 	/*
@@ -69,7 +69,8 @@ public class BitcoinScrapingService implements IBitcoinScrapingService {
 	private void automatedScraping() {
 		if(automatedScraping) {
 			BitcoinData firstEntry = this.iBitcoinDataDao.findFirstByOrderByTimeStampAsc();
-			List<BitcoinData> scrapedEntries = scrapeData(firstEntry.getTimeStamp() - scrapingMagnitude*timeUnitInSeconds, firstEntry.getTimeStamp());
+			List<BitcoinData> scrapedEntries = 
+					scrapeData(firstEntry.getTimeStamp() - scrapingMagnitude*timeUnitInSeconds, firstEntry.getTimeStamp());
 			if(scrapedEntries.size() == 0) {
 				this.automatedScraping = false;
 			}
