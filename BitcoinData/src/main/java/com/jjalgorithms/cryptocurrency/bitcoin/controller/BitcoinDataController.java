@@ -47,6 +47,11 @@ public class BitcoinDataController {
 		return listBitcoinDataDto;
 	}
 	
+	@GetMapping("/api/bitcoin/missingdata")
+	private int[] missingData() {
+		return this.iBitcoinDataService.missingData();
+	}
+	
 	@GetMapping("/api/bitcoin/firstentry")
 	private String getFirstEntry() {
 		BitcoinData firstEntry = this.iBitcoinDataService.findFirstByOrderByTimeStampAsc();
