@@ -18,8 +18,7 @@ public class BitcoinDataService implements IBitcoinDataService {
 	@Autowired
 	private IBitcoinDataDao iBitcoinDailyDAO;
 	
-	//Methods directly accessible through the interface, used for interaction with the database
-	
+	//Methods directly accessible through the interface, used for interaction with the database	
 	@Override
 	public long count() {
 		return this.iBitcoinDailyDAO.count();
@@ -38,6 +37,26 @@ public class BitcoinDataService implements IBitcoinDataService {
 	@Override
 	public <S extends BitcoinData> List<S> saveAll(Iterable <S> s) {
 		return this.iBitcoinDailyDAO.saveAll(s);
+	}
+	
+	@Override
+	public int[] missingData() {
+		int[] count = new int[100];
+		List<BitcoinData> dataList = this.iBitcoinDailyDAO.findAllByOrderByTimeStampAsc();
+		int items = 0;
+		BitcoinData previousData = new BitcoinData();
+		for(BitcoinData data : dataList) {
+			if(items == 0) {
+				previousData = data;
+				items++;
+				continue;
+			}
+			Long timeGap = (data.getTimeStamp() - previousData.getTimeStamp());
+			count[(int)(timeGap / 60)] ++;
+			previousData = data;
+		}
+		return count;
+		
 	}
 	
 	@Override

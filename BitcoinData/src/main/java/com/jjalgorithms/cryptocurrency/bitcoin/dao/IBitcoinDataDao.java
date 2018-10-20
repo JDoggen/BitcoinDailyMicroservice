@@ -22,6 +22,8 @@ public interface IBitcoinDataDao extends CrudRepository<BitcoinData, Long>{
 	
 	List<BitcoinData> findByTimeStampBetweenOrderByTimeStampAsc(Long timeStampStart, Long timeStampEnd);
 	
+	List<BitcoinData> findAllByOrderByTimeStampAsc();
+	
 	BitcoinData findFirstByOrderByTimeStampAsc();
 	
 	BitcoinData findFirstByOrderByTimeStampDesc();

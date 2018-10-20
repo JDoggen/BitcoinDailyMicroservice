@@ -29,4 +29,6 @@ public interface IBitcoinDataService {
 	
 	public Long DateToUnix(Date date);
 	
+	public int[] missingData();
+	
 }
